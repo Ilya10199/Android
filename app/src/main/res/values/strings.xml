@@ -3,7 +3,7 @@
     <string name="nmedia">NMedia!</string>
     <string name="description_post_menu" translatable="false">description_post_menu</string>
     <string name="description_post_author_avatar" translatable="false">description_post_author_avatar</string>
-    <string name="likes">TODO</string>
-    <string name="share">TODO</string>
-    <string name="visibility">TODO</string>
+    <string name="likes" translatable="false">likes</string>
+    <string name="share" translatable="false">share</string>
+    <string name="visibility" translatable="false">visibility</string>
 </resources>
