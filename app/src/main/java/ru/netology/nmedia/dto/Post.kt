@@ -1,11 +1,9 @@
 package ru.netology.nmedia
 
-import android.annotation.SuppressLint
+
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import kotlin.math.abs
-import kotlin.math.ln
-import kotlin.math.pow
+
 
 
 data class Post(
@@ -13,10 +11,10 @@ data class Post(
         val author: String,
         val content: String,
         val published: String,
-        var likeCount: Int = 1099,
-        var shareCount: Int = 11_999,
-        var visibilityCount: Int = 1_200_000,
-        var likedByMe: Boolean = false
+        val likeCount: Int = 0 ,
+        val shareCount: Int = 0,
+        val visibilityCount: Int = 0,
+        val likedByMe: Boolean = false
 
 )
 
@@ -35,7 +33,7 @@ fun countFormat(likesCount: Int): String {
 
 fun roundWithDecimal(number: Double): String {
         val df = DecimalFormat("#.#")
-        df.roundingMode = RoundingMode.DOWN
+        df.roundingMode = RoundingMode.FLOOR
         return df.format(number)
 }
 fun roundNoDecimal(number: Double): String {
