@@ -6,4 +6,12 @@
     <string name="likes" translatable="false">likes</string>
     <string name="share" translatable="false">share</string>
     <string name="visibility" translatable="false">visibility</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post text</string>
+    <string name="description_post_like">Like</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="description_post_cancel" translatable="false">cancel</string>
+    <string name="edit_message">Edit Message</string>
+    <string name="closeEdit" translatable="false"></string>
 </resources>
