@@ -53,7 +53,7 @@
         android:id="@+id/groupForEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="editImage, editMessageTextContent, editMessage, cancel_button" />
 
     <ImageView
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/closeEdit"
+        android:contentDescription="@string/editImage"
         app:layout_constraintBottom_toTopOf="@id/content"
         app:layout_constraintEnd_toStartOf="@id/editMessage"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/common_spacing"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/closeEdit"
+        android:contentDescription="@string/closeEditButton"
         app:layout_constraintBottom_toTopOf="@id/content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editMessage"
@@ -105,7 +105,8 @@
         app:layout_constraintBottom_toTopOf="@id/content"
         app:layout_constraintEnd_toEndOf="@id/editMessage"
         app:layout_constraintStart_toStartOf="@id/editMessage"
-        app:layout_constraintTop_toBottomOf="@id/editMessage" />
+        app:layout_constraintTop_toBottomOf="@id/editMessage"
+        tools:text="Какой-то текст поста для редактирования"/>
 
 
 

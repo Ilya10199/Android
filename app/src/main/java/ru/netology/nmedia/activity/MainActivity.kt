@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.edited.observe(this) { edited ->
             with(binding.content) {
-                val content = edited?.content
-                setText(content)
-                if (content != null) {
-                    binding.editMessageTextContent.text = content
+                val text = edited?.content
+                setText(text)
+                if (text != null) {
+                    binding.editMessageTextContent.text = text
                     binding.groupForEdit.visibility = View.VISIBLE
 
                 } else {
@@ -80,14 +80,10 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                     return@setOnClickListener
                 }
+                val content = text.toString()
+                viewModel.save(content)
 
-                viewModel.changeContent(text.toString())
-                viewModel.save()
-
-                setText("")
                 clearFocus()
-                AndroidUtils.hideKeyboard(this)
-
             }
         }
 
