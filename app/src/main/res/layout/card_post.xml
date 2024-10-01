@@ -126,5 +126,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/visibility"
         app:layout_constraintVertical_bias="0.0"
+        android:textColor="@color/DarkSlateGray"
         tools:text="@sample/posts.json/data/visibility" />
 </androidx.constraintlayout.widget.ConstraintLayout>
