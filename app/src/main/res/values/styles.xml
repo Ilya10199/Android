@@ -24,6 +24,11 @@
         <item name="iconTint">@color/DarkSlateGray</item>
         <item name="rippleColor">@color/teal_200</item>
     </style>
+    <style name="Widget.AppTheme.PlayButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">@color/DarkSlateGray</item>
+        <item name="rippleColor">@color/teal_200</item>
+
+    </style>
 
 
 </resources>

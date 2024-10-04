@@ -14,7 +14,7 @@
         android:layout_height="@dimen/posts_avatar_size"
         android:layout_marginBottom="@dimen/common_spacing"
         android:contentDescription="@string/description_post_author_avatar"
-        app:layout_constraintBottom_toBottomOf="@+id/barrier1"
+        app:layout_constraintBottom_toBottomOf="@+id/textBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/netology" />
@@ -28,7 +28,7 @@
         android:layout_marginEnd="@dimen/common_spacing"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/barrier1"
+        app:layout_constraintBottom_toBottomOf="@+id/textBarrier"
         app:layout_constraintBottom_toTopOf="@+id/published"
         app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintHorizontal_bias="0.029"
@@ -47,7 +47,7 @@
         tools:text="@sample/posts.json/data/published" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier1"
+        android:id="@+id/textBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
@@ -60,14 +60,14 @@
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginBottom="@dimen/common_spacing"
         android:autoLink="web"
-        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintBottom_toTopOf="@id/videoBarrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier1"
+        app:layout_constraintTop_toBottomOf="@id/textBarrier"
         tools:text="@sample/posts.json/data/content" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
+        android:id="@+id/likeShareBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
@@ -104,7 +104,7 @@
         android:contentDescription="@string/likes"
         app:icon="@drawable/ic_like_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier2" />
+        app:layout_constraintTop_toBottomOf="@id/likeShareBarrier" />
 
 
     <ImageView
@@ -122,10 +122,41 @@
         android:id="@+id/number_visibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/DarkSlateGray"
         app:layout_constraintBottom_toBottomOf="@+id/visibility"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/visibility"
         app:layout_constraintVertical_bias="0.0"
-        android:textColor="@color/DarkSlateGray"
         tools:text="@sample/posts.json/data/visibility" />
+
+    <FrameLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/like"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoBarrier">
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible" />
+        <ImageView
+            android:layout_width="@dimen/posts_avatar_size"
+            android:layout_height="@dimen/posts_avatar_size"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/baseline_play_circle_24" />
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/videoBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="content" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package ru.netology.nmedia.dto
 
 
+import android.net.Uri
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -14,7 +15,8 @@ data class Post(
         val likeCount: Int = 999 ,
         val shareCount: Int = 999,
         val visibilityCount: Int = 1200,
-        val likedByMe: Boolean = false
+        val likedByMe: Boolean = false,
+        val videoUrl: String? = null
 
 )
 

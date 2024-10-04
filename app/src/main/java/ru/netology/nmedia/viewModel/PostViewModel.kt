@@ -1,49 +1,47 @@
 package ru.netology.nmedia.viewModel
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
 
-//private val empty = Post(
-//    id = 0,
-//    content = "content",
-//    author = "me",
-//    likedByMe = false,
-//   published = "now"
-//)
+private val empty = Post(
+    id = 0,
+    content = "",
+    author = "",
+    likedByMe = false,
+    likeCount = 0,
+    shareCount = 0,
+    visibilityCount = 0,
+    published = ""
+)
 
 class PostViewModel : ViewModel() {
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
 
     val data = repository.getAll()
-    val edited = MutableLiveData<Post?>(null)
+    val edited = MutableLiveData(empty)
 
-    fun save(content: String) {
-        if (content.isBlank()) return
 
-        val post = edited.value?.copy(
-            content = content
-        ) ?: Post(
-            id = 0,
-            author = "Me",
-            content = content,
-            published = "Now"
-        )
-        repository.save(post)
-        edited.value = null
+    fun save() {
+        edited.value?.let {
+            repository.save(it)
+        }
+        edited.value = empty
     }
 
     fun edit(post: Post) {
         edited.value = post
     }
-
-    fun onCloseEditClicked() {
-        edited.value = null
-
+    fun changeContent(content: String) {
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
+        }
+        edited.value = edited.value?.copy(content = text)
     }
+
 
 
     fun likeById(id: Long) = repository.likeById(id)
