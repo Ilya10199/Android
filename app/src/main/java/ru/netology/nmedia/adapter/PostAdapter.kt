@@ -8,6 +8,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.NonCancellable.start
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -56,9 +57,8 @@ class PostViewHolder(
             if (post.videoUrl != null) {
                 videoLayout.visibility = View.VISIBLE
                 videoView.apply {
-                    setVideoURI(Uri.parse(post.videoUrl))
+                    setImageURI(Uri.parse(post.videoUrl))
                     requestFocus()
-                    start()
                 }
             } else {
                 videoLayout.visibility = View.GONE

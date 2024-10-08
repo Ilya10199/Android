@@ -133,18 +133,22 @@
         android:id="@+id/videoLayout"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toTopOf="@id/like"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/videoBarrier">
-        <VideoView
+
+        <ImageView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="visible" />
+            android:background="@android:color/transparent"/>
+
         <ImageView
+            android:id="@+id/videoButton"
             android:layout_width="@dimen/posts_avatar_size"
             android:layout_height="@dimen/posts_avatar_size"
             android:layout_gravity="center"
