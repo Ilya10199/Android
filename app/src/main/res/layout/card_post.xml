@@ -133,7 +133,7 @@
         android:id="@+id/videoLayout"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toTopOf="@id/like"
