@@ -34,6 +34,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun edit(post: Post) {
+
         edited.value = post
     }
 
@@ -44,6 +45,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
         edited.value = edited.value?.copy(content = text)
     }
+
 
 
     fun likeById(id: Long) = repository.likeById(id)
