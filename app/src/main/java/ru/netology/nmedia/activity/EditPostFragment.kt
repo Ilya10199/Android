@@ -22,28 +22,22 @@ class EditPostFragment : Fragment() {
         var Bundle.edit: String? by StringArg
     }
 
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
+
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val binding = FragmentEditAndNewPostBinding.inflate(inflater, container, false)
 
         arguments?.edit?.let(binding.editText::setText)
         binding.editText.setText(arguments?.getString("editedText"))
 
+        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
         binding.ok.setOnClickListener {
             if (binding.editText.text.isNullOrBlank()) {
                 Toast.makeText(
-                    activity,
-                    this.getString(R.string.error_empty_content),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    activity, this.getString(R.string.error_empty_content), Toast.LENGTH_SHORT
+                ).show()
             } else {
                 viewModel.changeContent(binding.editText.text.toString())
                 viewModel.save()
@@ -69,9 +63,7 @@ class NewPostFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val binding = FragmentEditAndNewPostBinding.inflate(inflater, container, false)
 
@@ -82,11 +74,8 @@ class NewPostFragment : Fragment() {
         binding.ok.setOnClickListener {
             if (binding.editText.text.isNullOrBlank()) {
                 Toast.makeText(
-                    activity,
-                    this.getString(R.string.error_empty_content),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    activity, this.getString(R.string.error_empty_content), Toast.LENGTH_SHORT
+                ).show()
             } else {
                 viewModel.changeContent(binding.editText.text.toString())
                 viewModel.save()

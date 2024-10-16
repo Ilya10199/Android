@@ -35,12 +35,14 @@ class FeedFragment : Fragment() {
                 val text = post.content
                 val bundle = Bundle()
                 bundle.getString("editedText", text)
-                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment, bundle)
+                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment)
 
             }
 
             override fun onSinglePost(post: Post) {
-
+                val bundle = Bundle()
+                bundle.putLong("id", post.id)
+                findNavController().navigate(R.id.action_feedFragment_to_singlePostFragment, bundle)
             }
 
             override fun onLike(post: Post) {
