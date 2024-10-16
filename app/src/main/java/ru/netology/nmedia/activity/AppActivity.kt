@@ -47,6 +47,9 @@ class AppActivity : AppCompatActivity() {
                     textArg = text
                 }
             )
+            findNavController(R.id.controller).navigate(
+                R.id.single_post
+            )
 
         }
     }

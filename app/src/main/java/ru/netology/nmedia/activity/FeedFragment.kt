@@ -39,6 +39,10 @@ class FeedFragment : Fragment() {
 
             }
 
+            override fun onSinglePost(post: Post) {
+
+            }
+
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
@@ -76,6 +80,8 @@ class FeedFragment : Fragment() {
         binding.add.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
+
 
 
 

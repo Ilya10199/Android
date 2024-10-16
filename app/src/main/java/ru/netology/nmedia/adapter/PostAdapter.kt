@@ -20,6 +20,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onPlayVideo(post: Post) {}
+    fun onSinglePost(post: Post) {}
 }
 
 
@@ -90,6 +91,9 @@ class PostViewHolder(
                         }
                     }
                 }.show()
+            }
+            binding.root.setOnClickListener{
+                onInteractionListener.onSinglePost(post)
             }
         }
     }
