@@ -35,7 +35,7 @@ class FeedFragment : Fragment() {
                 val text = post.content
                 val bundle = Bundle()
                 bundle.getString("editedText", text)
-                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment)
+                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment, bundle)
 
             }
 
