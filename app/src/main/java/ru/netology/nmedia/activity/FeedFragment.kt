@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.launch
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,7 +33,7 @@ class FeedFragment : Fragment() {
                 viewModel.edit(post)
                 val text = post.content
                 val bundle = Bundle()
-                bundle.getString("editedText", text)
+                bundle.putString("editedText", text)
                 findNavController().navigate(R.id.action_feedFragment_to_editPostFragment, bundle)
 
             }

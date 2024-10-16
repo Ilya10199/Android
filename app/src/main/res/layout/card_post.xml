@@ -162,12 +162,5 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupForSinglePost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        app:constraint_referenced_ids="content, published, avatar, author" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
