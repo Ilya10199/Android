@@ -16,7 +16,8 @@ data class Post(
         val shareCount: Int = 999,
         val visibilityCount: Int = 1200,
         val likedByMe: Boolean = false,
-        val videoUrl: String? = null
+        val sharedByMe: Boolean = false,
+        val videoUrl: String = ""
 
 )
 

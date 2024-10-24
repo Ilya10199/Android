@@ -54,7 +54,7 @@ class SinglePostFragment : Fragment() {
                     viewModel.edit(post)
                     val text = post.content
                     val bundle = Bundle()
-                    bundle.getString("editedText", text)
+                    bundle.putString("editedText", text)
                     findNavController().navigate(R.id.action_singlePostFragment_to_editPostFragment, bundle)
 
                 }

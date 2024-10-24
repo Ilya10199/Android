@@ -55,11 +55,11 @@ class PostViewHolder(
             share.text = countFormat(post.shareCount)
             like.text = countFormat(post.likeCount)
 
-            if (post.videoUrl != null) {
+            if (post.videoUrl.isNotEmpty()) {
                 videoLayout.visibility = View.VISIBLE
                 videoView.apply {
-                    setImageURI(Uri.parse(post.videoUrl))
                     requestFocus()
+
                 }
             } else {
                 videoLayout.visibility = View.GONE
