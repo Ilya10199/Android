@@ -62,12 +62,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         }
         return posts
     }
-    override fun likeById(id: Long) {
+    override fun likedById(id: Long) {
         db.execSQL(
             """
                 UPDATE posts SET
-                    likes = likes + CASE WHEN likeByMe THEN -1 ELSE + 1 END,
-                    likeByMe = CASE WHEN likeByMe THEN 0 ELSE 1 END
+                    likes = likes + CASE WHEN likedByMe THEN -1 ELSE + 1 END,
+                    likedByMe = CASE WHEN likedByMe THEN 0 ELSE 1 END
                 WHERE id = ?
             """.trimIndent(), arrayOf(id)
         )
