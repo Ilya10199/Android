@@ -8,4 +8,7 @@
     <string name="error_empty_content">Пост не может быть пустым</string>
     <string name="edit_message">Редактировать текст</string>
     <string name="description_post_save">Сохранить</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="empty_posts">Записей нет.\\nEсли вы создадите новую запись, она появится здесь</string>
+    <string name="error_loading">Что-то пошло не так. Попробуйте еще раз позже</string>
 </resources>

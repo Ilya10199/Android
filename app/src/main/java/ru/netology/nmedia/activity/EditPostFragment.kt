@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
-
 import ru.netology.nmedia.databinding.FragmentEditAndNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.utils.StringArg
@@ -21,7 +20,6 @@ class EditPostFragment : Fragment() {
     companion object {
         var Bundle.edit: String? by StringArg
     }
-
 
 
     override fun onCreateView(
@@ -46,6 +44,10 @@ class EditPostFragment : Fragment() {
             }
 
         }
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
+            findNavController().navigateUp()
+        }
 
         binding.cancelButton.setOnClickListener {
             AndroidUtils.hideKeyboard(requireView())
@@ -59,35 +61,52 @@ class EditPostFragment : Fragment() {
 class NewPostFragment : Fragment() {
 
     companion object {
-        var Bundle.textArg by StringArg
+        var Bundle.textArg: String? by StringArg
+
     }
 
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentEditAndNewPostBinding.inflate(inflater, container, false)
+
+        val binding = FragmentEditAndNewPostBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         arguments?.textArg?.let(binding.editText::setText)
 
-        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
-        binding.editText.requestFocus()
         binding.ok.setOnClickListener {
             if (binding.editText.text.isNullOrBlank()) {
                 Toast.makeText(
-                    activity, this.getString(R.string.error_empty_content), Toast.LENGTH_SHORT
-                ).show()
+                    activity,
+                    this.getString(R.string.error_empty_content),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             } else {
                 viewModel.changeContent(binding.editText.text.toString())
                 viewModel.save()
                 AndroidUtils.hideKeyboard(requireView())
-                findNavController().navigateUp()
+
             }
+        }
+
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
+            findNavController().navigateUp()
         }
         binding.cancelButton.setOnClickListener {
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigateUp()
         }
-
 
         return binding.root
     }

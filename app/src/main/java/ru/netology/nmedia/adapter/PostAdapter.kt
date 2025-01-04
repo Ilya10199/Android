@@ -1,14 +1,11 @@
 package ru.netology.nmedia.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.NonCancellable.start
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -27,7 +24,6 @@ interface OnInteractionListener {
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener,
-
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -53,20 +49,20 @@ class PostViewHolder(
             numberVisibility.text = countFormat(post.visibilityCount)
             like.isChecked = post.likedByMe
             share.text = countFormat(post.shareCount)
-            like.text = countFormat(post.likeCount)
+            like.text = countFormat(post.likes)
 
-            if (post.videoUrl.isNotEmpty()) {
-                videoLayout.visibility = View.VISIBLE
-                videoView.apply {
-                    requestFocus()
-
-                }
-            } else {
-                videoLayout.visibility = View.GONE
-            }
-            videoLayout.setOnClickListener {
-                onInteractionListener.onPlayVideo(post)
-            }
+          //  if (post.videoUrl.isNotEmpty()) {
+          //      videoLayout.visibility = View.VISIBLE
+          //      videoView.apply {
+          //          requestFocus()
+//
+          //      }
+         //   } else {
+          //      videoLayout.visibility = View.GONE
+           // }
+           // videoLayout.setOnClickListener {
+           //     onInteractionListener.onPlayVideo(post)
+           // }
 
             like.setOnClickListener{
                 onInteractionListener.onLike(post)
