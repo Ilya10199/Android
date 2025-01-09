@@ -44,7 +44,7 @@ class FeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                viewModel.like(post.id)
             }
 
             override fun onShare(post: Post) {

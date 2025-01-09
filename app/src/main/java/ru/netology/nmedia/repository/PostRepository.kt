@@ -9,7 +9,7 @@ interface PostRepository {
     fun unlikeById(id : Long, callback: NMediaCallback<Post>)
     fun shareById(id: Long)
     fun saveAsync(post: Post, callback: NMediaCallback<Post>)
-    fun removeById(id: Long, callback: NMediaCallback<Post>)
+    fun removeById(id: Long, callback: NMediaCallback<Unit>)
     fun getById(id : Long, callback: NMediaCallback<Post>)
 
     interface NMediaCallback<T> {

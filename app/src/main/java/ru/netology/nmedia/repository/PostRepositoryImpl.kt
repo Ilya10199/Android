@@ -55,6 +55,8 @@ class PostRepositoryImpl : PostRepository {
             })
     }
 
+
+
     override fun likeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
         val request:Request = Request.Builder()
             .post(gson.toJson("").toRequestBody(jsonType))
@@ -80,7 +82,7 @@ class PostRepositoryImpl : PostRepository {
 
     }
 
-    override fun unlikeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+    override fun unlikeById(id: Long, callback: PostRepository.NMediaCallback<Post>)  {
         val request:Request = Request.Builder()
             .delete()
             .url("${BASE_URL}/api/posts/$id/likes")
@@ -104,6 +106,7 @@ class PostRepositoryImpl : PostRepository {
 
             })
     }
+
 
     override fun getById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
         val request: Request = Request.Builder()
@@ -158,7 +161,7 @@ class PostRepositoryImpl : PostRepository {
     }
 
 
-    override fun removeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+    override fun removeById(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
         val request: Request = Request.Builder()
             .delete()
             .url("${BASE_URL}/api/posts/$id")
@@ -171,9 +174,8 @@ class PostRepositoryImpl : PostRepository {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, Post::class.java))
+                        callback.onSuccess(Unit)
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
