@@ -36,25 +36,38 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun loadPosts() {
-        thread {
-            _data.postValue(FeedModel(loading = true))
-            try {
-                val posts = repository.getAll()
-                FeedModel(posts = posts, empty = posts.isEmpty())
-            } catch (e: IOException) {
-                FeedModel(error = true)
-            }.also(_data::postValue)
+        _data.postValue(FeedModel(loading = true))
+        repository.getAllAsync(
+            object : PostRepository.NMediaCallback<List<Post>> {
+                override fun onSuccess(data: List<Post>) {
+                    _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
+                }
 
-        }
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+
+            }
+        )
+
     }
+
     fun save() {
         edited.value?.let {
-            thread {
-                repository.save(it)
-                _postCreated.postValue(Unit)
+            repository.saveAsync(it, object : PostRepository.NMediaCallback<Post> {
+                override fun onSuccess(data: Post) {
+                    _data.postValue(FeedModel())
+                    _postCreated.postValue(Unit)
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+
             }
+
+            )
         }
-        edited.value = empty
     }
 
     fun edit(post: Post) {
@@ -70,46 +83,54 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-        thread {
-            val post = repository.getById(id)
-            val updatedPost = if (post.likedByMe) repository.unlikeById(id) else repository.likeById(id)
-            _data.postValue(
-                FeedModel(posts =
-                _data.value!!.posts.map {
-                    if (post.id == it.id) updatedPost else it
-                })
-            )
+        repository.likeById(id, object : PostRepository.NMediaCallback<Post> {
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
 
-            repository.likeById(id)
+            override fun onSuccess(post: Post) {
+                _data.postValue(
+                    FeedModel(posts =
+                    _data.value!!.posts.map {
+                        if (post.id == it.id)
+                        {post.copy(likedByMe = post.likedByMe, likes = post.likes) }
+                        else {
+                            it
+                        }
+                    })
+                )
+            }
 
-        }
+        })
     }
 
+
+
     fun removeById(id: Long) {
-        thread {
-            // Оптимистичная модель
-            val old = _data.value?.posts.orEmpty()
-            _data.postValue(
-                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                    .filter { it.id != id }
-                )
-            )
-            try {
-                repository.removeById(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
+        val old = _data.value?.posts.orEmpty()
+
+        repository.removeById(id, object : PostRepository.NMediaCallback<Post> {
+            override fun onSuccess(data: Post) {
+                try {
+                    _data.postValue(
+                        _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                            .filter { it.id != id })
+                    )
+
+                } catch (e: Exception) {
+                    _data.postValue(_data.value?.copy(posts = old))
+                }
             }
-        }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
     fun shareById(id: Long) {
 
     }
 
-    fun getById(id: Long) {
-        thread {
-            repository.getById(id)
-        }
-    }
 
 }
