@@ -28,7 +28,7 @@ data class PostEntity (
         visibilityCount = visibilityCount,
         likedByMe = likedByMe,
         sharedByMe = sharedByMe,
-        videoUrl = videoUrl
+        //videoUrl = videoUrl
     )
 
     companion object {
@@ -43,7 +43,7 @@ data class PostEntity (
                 visibilityCount = visibilityCount,
                 likedByMe = likedByMe,
                 sharedByMe = sharedByMe,
-                videoUrl = videoUrl
+                //videoUrl = videoUrl
             )
         }
 

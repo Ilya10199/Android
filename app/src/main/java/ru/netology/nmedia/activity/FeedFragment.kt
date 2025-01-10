@@ -64,10 +64,10 @@ class FeedFragment : Fragment() {
                 viewModel.removeById(post.id)
             }
 
-            override fun onPlayVideo(post: Post) {
+            /*override fun onPlayVideo(post: Post) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
                 startActivity(intent)
-            }
+            }*/
 
         })
 

@@ -64,10 +64,10 @@ class SinglePostFragment : Fragment() {
                     findNavController().navigate(R.id.action_singlePostFragment_to_feedFragment)
                 }
 
-                override fun onPlayVideo(post: Post) {
+                /*override fun onPlayVideo(post: Post) {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
                     startActivity(intent)
-                }
+                }*/
 
             })
         //viewModel.data.observe(viewLifecycleOwner) { posts ->
