@@ -17,7 +17,7 @@ data class Post(
         val visibilityCount: Int = 0,
         val likedByMe: Boolean = false,
         val sharedByMe: Boolean = false,
-        //val videoUrl: String = ""
+        val authorAvatar : String
 
 )
 

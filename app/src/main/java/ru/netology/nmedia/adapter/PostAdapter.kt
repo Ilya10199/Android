@@ -10,13 +10,14 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.countFormat
+import com.bumptech.glide.Glide
+import androidx.core.net.toUri
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
     fun onShare(post: Post) {}
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
-    fun onPlayVideo(post: Post) {}
     fun onSinglePost(post: Post) {}
 }
 
@@ -46,23 +47,17 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
+            avatar.setImageURI(post.authorAvatar.toUri())
             numberVisibility.text = countFormat(post.visibilityCount)
             like.isChecked = post.likedByMe
             share.text = countFormat(post.shareCount)
             like.text = countFormat(post.likes)
 
-          //  if (post.videoUrl.isNotEmpty()) {
-          //      videoLayout.visibility = View.VISIBLE
-          //      videoView.apply {
-          //          requestFocus()
-//
-          //      }
-         //   } else {
-          //      videoLayout.visibility = View.GONE
-           // }
-           // videoLayout.setOnClickListener {
-           //     onInteractionListener.onPlayVideo(post)
-           // }
+            val url = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
+
+            Glide.with(binding.avatar)
+                .load(url)
+                .into(binding.avatar)
 
             like.setOnClickListener{
                 onInteractionListener.onLike(post)

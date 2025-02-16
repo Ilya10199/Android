@@ -17,7 +17,8 @@ private val empty = Post(
     author = "",
     likedByMe = false,
     likes = 0,
-    published = ""
+    published = "",
+    authorAvatar = ""
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -36,7 +37,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun loadPosts() {
-        _data.postValue(FeedModel(loading = true))
+        _data.value = FeedModel(loading = true)
         repository.getAllAsync(
             object : PostRepository.NMediaCallback<List<Post>> {
                 override fun onSuccess(data: List<Post>) {
@@ -44,7 +45,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.value = FeedModel(loading = true)
                 }
 
             }
@@ -168,6 +169,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun shareById(id: Long) {
 
     }
+
 
 
 }

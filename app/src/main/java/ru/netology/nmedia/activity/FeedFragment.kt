@@ -16,6 +16,7 @@ import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
+import com.bumptech.glide.Glide
 
 
 class FeedFragment : Fragment() {
@@ -64,10 +65,7 @@ class FeedFragment : Fragment() {
                 viewModel.removeById(post.id)
             }
 
-            /*override fun onPlayVideo(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
-                startActivity(intent)
-            }*/
+
 
         })
 
