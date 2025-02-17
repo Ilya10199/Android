@@ -57,6 +57,8 @@ class PostViewHolder(
 
             Glide.with(binding.avatar)
                 .load(url)
+                .circleCrop()
+                .timeout(10_000)
                 .into(binding.avatar)
 
             like.setOnClickListener{
