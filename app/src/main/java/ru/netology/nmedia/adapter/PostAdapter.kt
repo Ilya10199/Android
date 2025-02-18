@@ -47,7 +47,6 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            avatar.setImageURI(post.authorAvatar.toUri())
             numberVisibility.text = countFormat(post.visibilityCount)
             like.isChecked = post.likedByMe
             share.text = countFormat(post.shareCount)
