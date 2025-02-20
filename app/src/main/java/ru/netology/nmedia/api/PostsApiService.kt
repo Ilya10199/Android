@@ -10,7 +10,7 @@ import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.dto.Post
 
 
-private val BASE_URL = BuildConfig.BASE_URL
+private const val BASE_URL = BuildConfig.BASE_URL
 private val logging = HttpLoggingInterceptor().apply {
     if(BuildConfig.DEBUG) {
         level = HttpLoggingInterceptor.Level.BODY
@@ -34,9 +34,9 @@ interface PostsApiService {
     @GET("posts/{id}")
     fun getById(@Path("id") id : Long) : Call<Post>
     @POST("posts/{id}/likes")
-    fun likeById(@Path("id") id : Long) : Call<Post>
+    fun likeById(@Path("id") id: Long): Call<Post>
     @DELETE("posts/{id}/likes")
-    fun unlikeById(@Path("id") id : Long) : Call<Post>
+    fun dislikeById(@Path("id") id: Long): Call<Post>
 }
 object PostsApi {
     val retrofitService : PostsApiService by lazy {

@@ -34,7 +34,7 @@ class SinglePostFragment : Fragment() {
             object : OnInteractionListener {
 
                 override fun onLike(post: Post) {
-                    viewModel.likeById(post.id)
+                    viewModel.likeById(post.id, post.likedByMe)
                 }
 
                 override fun onShare(post: Post) {

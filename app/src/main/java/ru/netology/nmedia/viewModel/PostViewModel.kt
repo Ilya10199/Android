@@ -5,11 +5,7 @@ import androidx.lifecycle.*
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.*
-
 import ru.netology.nmedia.utils.SingleLiveEvent
-import java.io.IOException
-import java.net.ConnectException
-import kotlin.concurrent.thread
 
 
 private val empty = Post(
@@ -29,6 +25,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val data: LiveData<FeedModel>
         get() = _data
     private val edited = MutableLiveData(empty)
+
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
         get() = _postCreated
@@ -36,6 +33,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     init {
         loadPosts()
     }
+
+    private val _singleError = SingleLiveEvent<Unit>()
+    val singleError: LiveData<Unit>
+        get() = _singleError
 
     fun loadPosts() {
         _data.value = FeedModel(loading = true)
@@ -45,8 +46,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                     _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
                 }
 
-                override fun onError(e: Exception) {
-                    _data.value = FeedModel(loading = true)
+                override fun onError(e: Throwable) {
+                    _data.postValue(FeedModel(error = true))
                 }
 
             }
@@ -58,21 +59,19 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let {
             repository.saveAsync(it, object : PostRepository.Callback<Post> {
                 override fun onSuccess(data: Post) {
-                    _data.postValue(FeedModel())
                     _postCreated.postValue(Unit)
-                    loadPosts()
                 }
 
-                override fun onError(e: Exception) {
-                    _data.postValue(
-                        if (e is ConnectException) FeedModel(error = true) else FeedModel(connectionError = true)
-                    )
+                override fun onError(e: Throwable) {
+                    _singleError.postValue(Unit)
+
                 }
 
             }
 
             )
         }
+        edited.value = empty
     }
 
     fun edit(post: Post) {
@@ -87,71 +86,25 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value = edited.value?.copy(content = text)
     }
 
-    fun likeById(id: Long) {
-        repository.likeById(id, object : PostRepository.Callback<Post> {
-            override fun onError(e: Exception) {
-                _data.postValue(
-                    if (e is ConnectException) FeedModel(error = true) else FeedModel(connectionError = true)
-                )
-            }
 
-            override fun onSuccess(post: Post) {
+    fun likeById(id: Long, likedByMe: Boolean) {
+        val old = _data.value?.posts.orEmpty()
+        repository.likeById(id, likedByMe, object : PostRepository.Callback<Post> {
+            override fun onSuccess(value: Post) {
                 _data.postValue(
-                    FeedModel(posts =
-                    _data.value!!.posts.map {
-                        if (post.id == it.id)
-                        {post.copy(likedByMe = post.likedByMe, likes = post.likes) }
-                        else {
-                            it
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map {
+                            if (it.id != id) it else value
                         }
-                    })
+                    )
                 )
             }
-
+            override fun onError(e: Throwable) {
+                _singleError.postValue(Unit)
+                _data.postValue(_data.value?.copy(posts = old))
+            }
         })
     }
-    fun unlikeById(id : Long) {
-        repository.unlikeById(id, object : PostRepository.Callback<Post> {
-            override fun onError(e: Exception) {
-                _data.postValue(
-                    if (e is ConnectException) FeedModel(error = true) else FeedModel(connectionError = true)
-                )
-            }
-
-            override fun onSuccess(post: Post) {
-                _data.postValue(
-                    FeedModel(posts =
-                    _data.value!!.posts.map {
-                        if (post.id == it.id)
-                        {post.copy(likedByMe = post.likedByMe, likes = post.likes) }
-                        else {
-                            it
-                        }
-                    })
-                )
-            }
-
-        })
-    }
-
-    fun like(id : Long) {
-
-        repository.getById(id, object : PostRepository.Callback<Post> {
-            override fun onError(e: Exception) {
-                _data.postValue(
-                    if (e is ConnectException) FeedModel(error = true) else FeedModel(connectionError = true)
-                )
-            }
-
-            override fun onSuccess(post: Post) {
-                if (post.likedByMe) unlikeById(id) else likeById(id)
-            }
-        })
-
-
-
-    }
-
 
 
     fun removeById(id: Long) {
@@ -159,21 +112,18 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
         repository.removeById(id, object : PostRepository.CallbackUnit<Unit> {
             override fun onSuccess() {
-                try {
-                    _data.postValue(
-                        _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                            .filter { it.id != id })
-                    )
 
-                } catch (e: Exception) {
-                    _data.postValue(_data.value?.copy(posts = old))
-                }
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .filter { it.id != id })
+                )
+
+
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(
-                    if (e is ConnectException) FeedModel(error = true) else FeedModel(connectionError = true)
-                )
+                _singleError.postValue(Unit)
+                _data.postValue(_data.value?.copy(posts = old))
             }
         })
     }
@@ -181,7 +131,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun shareById(id: Long) {
 
     }
-
 
 
 }
